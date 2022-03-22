@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Page2">
+<TextView
+    android:layout_width="wrap_content"
+    android:id="@+id/welcomeTV"
+    android:text="@string/hello_name"
+    android:layout_height="wrap_content"/>
+    <EditText
+        app:layout_constraintTop_toBottomOf="@id/welcomeTV"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:hint="text ..."
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/textToReturn"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:text="Go To Main"
+        app:layout_constraintTop_toBottomOf="@id/textToReturn"
+        android:id="@+id/gotoMain"
+        android:layout_height="wrap_content"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

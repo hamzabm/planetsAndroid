@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mon Uppa</string>
+    <string name="hello">Bonjour de l\'Uppa</string>
+    <string name="ok">OK</string>
+    <string name="RAZ">RAZ</string>
+    <string name="Annuler">Annuler</string>
+</resources>
