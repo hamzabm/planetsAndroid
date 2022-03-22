@@ -1,8 +1,11 @@
 package com.uppa.monapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Planet {
     public String nom;
     public int distance;
+    @SerializedName("logo")
     public String imageUrl;
 
     public String getImageUrl() {

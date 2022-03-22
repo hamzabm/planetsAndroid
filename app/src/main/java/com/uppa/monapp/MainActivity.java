@@ -23,37 +23,50 @@ import android.widget.Toast;
 import com.uppa.monapp.adapters.PlanetsAdapter;
 import com.uppa.monapp.databinding.ActivityMainBinding;
 import com.uppa.monapp.model.Planet;
+import com.uppa.monapp.network.PlanetsApi;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding ui;
+    ArrayList<Planet> planets;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        ui = ActivityMainBinding.inflate(getLayoutInflater());
-        ArrayList<Planet> planets = new ArrayList<Planet>();
-        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
-        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
-        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
-        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
-        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
-        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
+        Retrofit retrofit = new Retrofit.Builder()
+                .addConverterFactory( GsonConverterFactory.create())
+                .baseUrl("https://jsonkeeper.com/b/39RU/")
+                .build();
+        PlanetsApi service = retrofit.create(PlanetsApi.class);
+        Call<List<Planet>> planetsCall = service.getPlanets("https://jsonkeeper.com/b/39RU/");
+        planetsCall.enqueue(new Callback<List<Planet>>() {
+            @Override
+            public void onResponse(Call<List<Planet>> call, Response<List<Planet>> response) {
+                LinearLayoutManager  lm = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
+                ui.planetsRv.setLayoutManager(lm);
+                    planets = new ArrayList(response.body());
+                PlanetsAdapter planetsAdapter = new PlanetsAdapter(planets);
+                planetsAdapter.setOnItemClickListener(postition -> {
+                    Log.d("Log","Planet "+ planets.get(postition).getNom() +" clicked" );
+                });
+                ui.planetsRv.setAdapter(planetsAdapter);
+            }
 
-        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
-        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
-        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
-        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
-        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
-        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
+            @Override
+            public void onFailure(Call<List<Planet>> call, Throwable t) {
 
-        LinearLayoutManager  lm = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
-        ui.planetsRv.setLayoutManager(lm);
-        PlanetsAdapter planetsAdapter = new PlanetsAdapter(planets);
-        planetsAdapter.setOnItemClickListener(postition -> {
-            Log.d("Log","Planet "+ planets.get(postition).getNom() +" clicked" );
+            }
         });
-        ui.planetsRv.setAdapter(planetsAdapter);
+
+
         setContentView(ui.getRoot());
     }
 
