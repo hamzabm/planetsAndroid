@@ -6,6 +6,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.uppa.monapp.adapters.PlanetsAdapter;
 import com.uppa.monapp.databinding.PlanetItemBinding;
 import com.uppa.monapp.model.Planet;
@@ -33,7 +34,7 @@ public class PlanetViewHolder  extends RecyclerView.ViewHolder implements  View.
     public void setPlanet(Planet pl){
         ui.nomPlanet.setText(pl.getNom());
         ui.distance.setText(String.valueOf(pl.getDistance()));
-        ui.planetLogo.setImageResource(pl.getImageId());
+        Glide.with(ui.getRoot()).load(pl.imageUrl).into(ui.planetLogo);
 
     }
 

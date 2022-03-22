@@ -33,21 +33,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
        ui = ActivityMainBinding.inflate(getLayoutInflater());
         ArrayList<Planet> planets = new ArrayList<Planet>();
-        planets.add(new Planet("Mercure",58,R.drawable.mercure));
-        planets.add(new Planet("Vénus",108,R.drawable.venus));
-        planets.add(new Planet("Terre",150,R.drawable.terre));
-        planets.add(new Planet("Mercure",58,R.drawable.mercure));
-        planets.add(new Planet("Vénus",108,R.drawable.venus));
-        planets.add(new Planet("Terre",150,R.drawable.terre));
-        planets.add(new Planet("Mercure",58,R.drawable.mercure));
-        planets.add(new Planet("Vénus",108,R.drawable.venus));
-        planets.add(new Planet("Terre",150,R.drawable.terre));
-        planets.add(new Planet("Mercure",58,R.drawable.mercure));
-        planets.add(new Planet("Vénus",108,R.drawable.venus));
-        planets.add(new Planet("Terre",150,R.drawable.terre));
-        planets.add(new Planet("Mercure",58,R.drawable.mercure));
-        planets.add(new Planet("Vénus",108,R.drawable.venus));
-        planets.add(new Planet("Terre",150,R.drawable.terre));
+        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
+        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
+        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
+        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
+        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
+        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
+
+        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
+        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
+        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
+        planets.add(new Planet("Mercure",58,"https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png"));
+        planets.add(new Planet("Vénus",108,"http://assets.stickpng.com/images/580b585b2edbce24c47b2712.png"));
+        planets.add(new Planet("Terre",150,"https://img.lovepik.com/element/40023/8923.png_860.png"));
+
         LinearLayoutManager  lm = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
         ui.planetsRv.setLayoutManager(lm);
         PlanetsAdapter planetsAdapter = new PlanetsAdapter(planets);

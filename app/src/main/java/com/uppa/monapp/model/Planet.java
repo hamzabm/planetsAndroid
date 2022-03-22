@@ -3,12 +3,20 @@ package com.uppa.monapp.model;
 public class Planet {
     public String nom;
     public int distance;
-    public int imageId;
+    public String imageUrl;
 
-    public Planet(String nom, int distance, int imageId) {
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Planet(String nom, int distance, String imageUrl) {
         this.nom = nom;
         this.distance = distance;
-        this.imageId = imageId;
+        this.imageUrl = imageUrl;
     }
 
     public String getNom() {
@@ -27,13 +35,7 @@ public class Planet {
         this.distance = distance;
     }
 
-    public int getImageId() {
-        return imageId;
-    }
 
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
-    }
 }
 
 
