@@ -42,13 +42,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        ui = ActivityMainBinding.inflate(getLayoutInflater());
-        PlanetDataBase db = Room.databaseBuilder(getApplicationContext(),
-                PlanetDataBase.class, "planet_db").allowMainThreadQueries().build();
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory( GsonConverterFactory.create())
-                .baseUrl("https://my-json-server.typicode.com/hamzabm/")
-                .build();
-        PlanetsApi service = retrofit.create(PlanetsApi.class);
+        PlanetApplication planetApplication = ( (PlanetApplication) getApplicationContext() );
+        PlanetsApi service = planetApplication.getRetrofit().create(PlanetsApi.class);
         Call<List<Planet>> planetsCall = service.getPlanets();
         LinearLayoutManager  lm = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL,false);
         ui.planetsRv.setLayoutManager(lm);
@@ -57,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<Planet>> call, Response<List<Planet>> response) {
                 ArrayList<Planet> planets;
                     planets = new ArrayList(response.body());
-                    if(db.planetDao().getAll().size()>0){
-                        db.planetDao().deleteAll();
+                    if(planetApplication.getDb().planetDao().getAll().size()>0){
+                        planetApplication.getDb().planetDao().deleteAll();
                     }
-                    db.planetDao().insertAll(planets);
+                planetApplication.getDb().planetDao().insertAll(planets);
                 PlanetsAdapter planetsAdapter = new PlanetsAdapter(planets);
                 planetsAdapter.setOnItemClickListener(postition -> {
                     Log.d("Log","Planet "+ planets.get(postition).getNom() +" clicked" );
@@ -74,8 +69,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<List<Planet>> call, Throwable t) {
                 ArrayList<Planet> planets;
-                if(db.planetDao().getAll().size()>0){
-                    planets = new ArrayList(db.planetDao().getAll());
+                if(planetApplication.getDb().planetDao().getAll().size()>0){
+                    planets = new ArrayList(planetApplication.getDb().planetDao().getAll());
                     PlanetsAdapter planetsAdapter = new PlanetsAdapter(planets);
                     planetsAdapter.setOnItemClickListener(postition -> {
                         Log.d("Log","Planet "+ planets.get(postition).getNom() +" clicked" );

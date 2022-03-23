@@ -36,23 +36,19 @@ public class PlanetDetailActivity extends AppCompatActivity {
         ui = ActivityPlanetDetailBinding.inflate(getLayoutInflater());
         int id = getIntent().getIntExtra("id", -1);
         Log.d("HamzaLog", "Id Planet : " + id);
-        PlanetDataBase db = Room.databaseBuilder(getApplicationContext(),
-                PlanetDataBase.class, "planet_db").allowMainThreadQueries().build();
+        PlanetApplication planetApplication = ( (PlanetApplication) getApplicationContext() );
 
-        Retrofit retrofit = new Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create())
-                .baseUrl("https://my-json-server.typicode.com/hamzabm/")
-                .build();
-        PlanetsApi service = retrofit.create(PlanetsApi.class);
+
+        PlanetsApi service = planetApplication.getRetrofit().create(PlanetsApi.class);
         Call<List<PlanetInfo>> planetsCall = service.getPlanetInfo(id);
         planetsCall.enqueue(new Callback<List<PlanetInfo>>() {
             @Override
             public void onResponse(Call<List<PlanetInfo>> call, Response<List<PlanetInfo>> response) {
                 PlanetInfo pl = response.body().get(0);
-                if (db.planetInfoDao().getPlanetInfoByid(id)!=null) {
-                    db.planetInfoDao().deleteOneByIdPlanet(id);
+                if (planetApplication.getDb().planetInfoDao().getPlanetInfoByid(id)!=null) {
+                    planetApplication.getDb().planetInfoDao().deleteOneByIdPlanet(id);
                 }
-                db.planetInfoDao().insertAll(pl);
+                planetApplication.getDb().planetInfoDao().insertAll(pl);
                 ui.nom.setText(pl.getName());
                 Glide.with(ui.getRoot()).load(pl.getLogo()).into(ui.logo);
                 ui.description.setText(pl.getDescription());
@@ -66,8 +62,8 @@ public class PlanetDetailActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<PlanetInfo>> call, Throwable t) {
-                if (db.planetInfoDao().getPlanetInfoByid(id)!=null) {
-                    PlanetInfo pl = db.planetInfoDao().getPlanetInfoByid(id);
+                if (planetApplication.getDb().planetInfoDao().getPlanetInfoByid(id)!=null) {
+                    PlanetInfo pl = planetApplication.getDb().planetInfoDao().getPlanetInfoByid(id);
                     ui.nom.setText(pl.getName());
                     Glide.with(ui.getRoot()).load(pl.getLogo()).into(ui.logo);
                     ui.description.setText(pl.getDescription());
