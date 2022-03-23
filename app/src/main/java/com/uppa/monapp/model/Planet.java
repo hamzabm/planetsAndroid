@@ -1,8 +1,13 @@
 package com.uppa.monapp.model;
 
-import com.google.gson.annotations.SerializedName;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+@Entity(tableName = "planet")
 public class Planet {
+    @ColumnInfo(name = "nom")
     public String nom;
 
     public int getId() {
@@ -12,9 +17,12 @@ public class Planet {
     public void setId(int id) {
         this.id = id;
     }
-
+    @PrimaryKey
+    @ColumnInfo(name = "id")
     public int id;
+    @ColumnInfo(name = "distance")
     public int distance;
+    @ColumnInfo(name = "logo")
     @SerializedName("logo")
     public String imageUrl;
 
