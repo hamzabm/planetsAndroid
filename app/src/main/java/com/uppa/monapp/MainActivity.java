@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity {
        ui = ActivityMainBinding.inflate(getLayoutInflater());
         Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory( GsonConverterFactory.create())
-                .baseUrl("https://jsonkeeper.com/b/39RU/")
+                .baseUrl("https://my-json-server.typicode.com/hamzabm/")
                 .build();
         PlanetsApi service = retrofit.create(PlanetsApi.class);
-        Call<List<Planet>> planetsCall = service.getPlanets("https://jsonkeeper.com/b/39RU/");
+        Call<List<Planet>> planetsCall = service.getPlanets();
         planetsCall.enqueue(new Callback<List<Planet>>() {
             @Override
             public void onResponse(Call<List<Planet>> call, Response<List<Planet>> response) {
@@ -56,6 +56,9 @@ public class MainActivity extends AppCompatActivity {
                 PlanetsAdapter planetsAdapter = new PlanetsAdapter(planets);
                 planetsAdapter.setOnItemClickListener(postition -> {
                     Log.d("Log","Planet "+ planets.get(postition).getNom() +" clicked" );
+                Intent detail = new Intent(getApplicationContext(),PlanetDetailActivity.class);
+                detail.putExtra("id",planets.get(postition).id);
+                startActivity(detail);
                 });
                 ui.planetsRv.setAdapter(planetsAdapter);
             }

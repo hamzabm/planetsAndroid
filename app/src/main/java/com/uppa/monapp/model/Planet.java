@@ -4,6 +4,16 @@ import com.google.gson.annotations.SerializedName;
 
 public class Planet {
     public String nom;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int id;
     public int distance;
     @SerializedName("logo")
     public String imageUrl;
@@ -16,8 +26,9 @@ public class Planet {
         this.imageUrl = imageUrl;
     }
 
-    public Planet(String nom, int distance, String imageUrl) {
+    public Planet(String nom, int id, int distance, String imageUrl) {
         this.nom = nom;
+        this.id = id;
         this.distance = distance;
         this.imageUrl = imageUrl;
     }
